@@ -17,14 +17,9 @@ int main() {
     sort(containers.begin(), containers.end(), customSort);  // Sort by Value
 
     for(auto& container : containers){
-        if(n >= container.first)
-            result += container.first * container.second;
-        else {
-            result += n * container.second;
-            break;
-        }
-
+        result += (n >= container.first ? container.first : n) * container.second;
         n -= container.first;
+        if(n < 0) break;
     }
 
     cout << result;
