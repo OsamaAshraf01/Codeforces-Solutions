@@ -18,12 +18,13 @@ int main() {
    for(int i=0 ; i<n ; i++){
        if(!visited[i]) {
            dist = abs(a - i);
-           if (a + dist < n) {
-               arrested += (criminals[i] && criminals[a + dist] ? 2 : 0);
-               if((i == a+dist) && criminals[i])
-                   arrested--;
+           if (a + dist < n && criminals[i] && criminals[a + dist]) {
+               arrested += ((i == a + dist) ? 1 : 2);
                visited[a + dist] = true;
-           } else
+           }
+           else if(a + dist < n)
+               visited[a + dist] = true;
+           else
                arrested += criminals[i];
 
            visited[i] = true;
