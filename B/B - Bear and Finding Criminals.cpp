@@ -1,37 +1,34 @@
 // Link To Problem: https://codeforces.com/contest/680/problem/B
 
 #include <bits/stdc++.h>
+
 #define lp(n) for(int i=0 ; i<n ; i++)
 using namespace std;
 
-
-
-
-
 int main() {
-    int n, a, dist, arrested=0;
-    cin >> n >> a;   a--;
-    vector<int> criminals(n); vector<bool> visited(n, false);
-    for(int& x : criminals) cin>>x;
+    int n, a;
+    cin >> n >> a;
+    a--;
+    vector<int> criminals(n);
+    for (int &x: criminals) cin >> x;
 
+    int arrested = criminals[a];
 
-   for(int i=0 ; i<n ; i++){
-       if(!visited[i]) {
-           dist = abs(a - i);
-           if (a + dist < n && criminals[i] && criminals[a + dist]) {
-               arrested += ((i == a + dist) ? 1 : 2);
-               visited[a + dist] = true;
-           }
-           else if(a + dist < n)
-               visited[a + dist] = true;
-           else
-               arrested += criminals[i];
+    for (int dist = 1; dist < n; dist++) {
+        int left = a - dist;
+        int right = a + dist;
 
-           visited[i] = true;
-       }
-   }
+        if (left >= 0 && right < n)
+            arrested += (criminals[left] && criminals[right] ? 2 : 0);
+        else if (left >= 0)
+            arrested += criminals[left];
+        else if (right < n)
+            arrested += criminals[right];
+        else
+            break;
+    }
 
-   cout << arrested;
+    cout << arrested;
 
     return 0;
 }
